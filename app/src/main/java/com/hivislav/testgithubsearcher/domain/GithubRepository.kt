@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 
 interface GithubRepository {
 
-    fun loadRepos(): LiveData<List<Repo>>
+    suspend fun loadRepos(userName: String): LiveData<List<Repo>>
 
-    fun getUrlRepo(repoId: Long): String
+    fun getUrlRepo(repo: Repo): String
 
     fun downloadRepo()
 }

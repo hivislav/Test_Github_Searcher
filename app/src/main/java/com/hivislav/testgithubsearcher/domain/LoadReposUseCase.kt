@@ -5,5 +5,5 @@ import javax.inject.Inject
 class LoadReposUseCase @Inject constructor(
     private val repository: GithubRepository
 ) {
-    operator fun invoke() = repository.loadRepos()
+    suspend operator fun invoke(userName: String) = repository.loadRepos(userName)
 }
