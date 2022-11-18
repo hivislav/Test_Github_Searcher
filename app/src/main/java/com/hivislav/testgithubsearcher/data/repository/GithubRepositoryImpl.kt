@@ -13,11 +13,9 @@ class GithubRepositoryImpl @Inject constructor(
     private val mapper: RepoMapper
 ): GithubRepository {
 
-    override suspend fun loadRepos(userName: String): LiveData<List<Repo>> {
-        return Transformations.map(apiService.loadRepos(userName)) {
-            it.map { repoDto ->
-                mapper.mapDtoToEntity(repoDto)
-            }
+    override suspend fun loadRepos(userName: String): List<Repo> {
+        return apiService.loadRepos(userName).map {
+            mapper.mapDtoToEntity(it)
         }
     }
 

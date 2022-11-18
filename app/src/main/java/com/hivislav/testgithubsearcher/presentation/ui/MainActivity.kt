@@ -1,4 +1,4 @@
-package com.hivislav.testgithubsearcher.presentation
+package com.hivislav.testgithubsearcher.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
