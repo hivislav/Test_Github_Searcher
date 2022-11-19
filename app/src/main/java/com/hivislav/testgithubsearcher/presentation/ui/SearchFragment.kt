@@ -1,6 +1,8 @@
 package com.hivislav.testgithubsearcher.presentation.ui
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
+import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
 import com.hivislav.testgithubsearcher.presentation.adapter.SearchFragmentAdapter
 import com.hivislav.testgithubsearcher.presentation.viewmodel.SearchFragmentAppState
@@ -50,6 +53,11 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerSearchFragment.adapter = adapter
+        adapter.onRepoClickListener = object : SearchFragmentAdapter.OnRepoClickListener {
+            override fun onRepoClick(repo: Repo) {
+                openRepoLinkInBrowser(repo)
+            }
+        }
 
         viewModel = ViewModelProvider(
             this,
@@ -62,6 +70,22 @@ class SearchFragment : Fragment() {
 
         binding.textInputLayoutSearchFragment.setEndIconOnClickListener {
             findRepos()
+        }
+    }
+
+    private fun openRepoLinkInBrowser(repo: Repo) {
+        val url = Uri.parse(repo.urlRepository)
+        val openLinkIntent = Intent(Intent.ACTION_VIEW, url)
+        val chooser = Intent.createChooser(openLinkIntent, "Choose app for open link")
+
+        if (openLinkIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(chooser)
+        } else {
+            Toast.makeText(
+                requireActivity(),
+                "Application not found to open link",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -94,6 +118,7 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
 
     companion object {
         fun newInstance() = SearchFragment()

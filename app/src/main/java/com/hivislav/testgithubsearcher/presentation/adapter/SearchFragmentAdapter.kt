@@ -11,6 +11,8 @@ import com.hivislav.testgithubsearcher.domain.Repo
 class SearchFragmentAdapter :
     ListAdapter<Repo, SearchFragmentAdapter.SearchViewHolder>(SearchFragmentDiffCallback) {
 
+    var onRepoClickListener: OnRepoClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding = ItemSearchFragmentRecyclerBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -24,7 +26,7 @@ class SearchFragmentAdapter :
         holder.bind(getItem(position))
     }
 
-    class SearchViewHolder(private val binding: ItemSearchFragmentRecyclerBinding) :
+    inner class SearchViewHolder(private val binding: ItemSearchFragmentRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(repo: Repo) {
             itemView.apply {
@@ -33,7 +35,14 @@ class SearchFragmentAdapter :
                     userNameTextView.text = repo.userName
                     repoNameTextView.text = repo.repoName
                 }
+                setOnClickListener {
+                    onRepoClickListener?.onRepoClick(repo)
+                }
             }
         }
+    }
+
+    interface OnRepoClickListener {
+        fun onRepoClick (repo: Repo)
     }
 }
