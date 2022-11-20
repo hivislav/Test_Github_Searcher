@@ -1,4 +1,4 @@
-package com.hivislav.testgithubsearcher.presentation.adapter
+package com.hivislav.testgithubsearcher.presentation.adapter.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.hivislav.testgithubsearcher.domain.Repo

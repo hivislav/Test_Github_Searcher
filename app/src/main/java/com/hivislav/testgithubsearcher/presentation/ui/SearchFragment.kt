@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
-import com.hivislav.testgithubsearcher.presentation.adapter.SearchFragmentAdapter
+import com.hivislav.testgithubsearcher.presentation.adapter.recycler.SearchFragmentAdapter
 import com.hivislav.testgithubsearcher.presentation.viewmodel.SearchFragmentAppState
 import com.hivislav.testgithubsearcher.presentation.viewmodel.SearchFragmentViewModel
 import com.hivislav.testgithubsearcher.presentation.viewmodel.ViewModelFactory

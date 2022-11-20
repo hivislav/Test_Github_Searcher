@@ -1,4 +1,4 @@
-package com.hivislav.testgithubsearcher.presentation.adapter
+package com.hivislav.testgithubsearcher.presentation.adapter.recycler
 
 import android.view.LayoutInflater
 import android.view.View
