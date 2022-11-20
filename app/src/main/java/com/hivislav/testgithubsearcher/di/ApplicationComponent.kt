@@ -1,6 +1,7 @@
 package com.hivislav.testgithubsearcher.di
 
 import android.app.Application
+import com.hivislav.testgithubsearcher.presentation.ui.DownloadFragment
 import com.hivislav.testgithubsearcher.presentation.ui.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -10,6 +11,8 @@ import dagger.Component
 interface ApplicationComponent {
 
     fun inject(fragment: SearchFragment)
+
+    fun inject(fragment: DownloadFragment)
 
     @Component.Factory
     interface ApplicationComponentFactory{

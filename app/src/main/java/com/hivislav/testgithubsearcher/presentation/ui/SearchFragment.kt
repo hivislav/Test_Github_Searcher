@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
-import com.hivislav.testgithubsearcher.presentation.adapter.recycler.SearchFragmentAdapter
-import com.hivislav.testgithubsearcher.presentation.viewmodel.SearchFragmentAppState
+import com.hivislav.testgithubsearcher.presentation.adapter.recycler.ViewPagerBaseFragmentAdapter
+import com.hivislav.testgithubsearcher.presentation.viewmodel.AppState
 import com.hivislav.testgithubsearcher.presentation.viewmodel.SearchFragmentViewModel
 import com.hivislav.testgithubsearcher.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class SearchFragment : Fragment() {
     private val component by lazy {
         (requireActivity().application as GithubApplication).component
     }
-    private val adapter = SearchFragmentAdapter()
+    private val adapter = ViewPagerBaseFragmentAdapter()
 
     override fun onAttach(context: Context) {
         component.inject(this)
@@ -73,7 +73,7 @@ class SearchFragment : Fragment() {
             findRepos()
         }
 
-        adapter.onRepoClickListener = object : SearchFragmentAdapter.OnRepoClickListener {
+        adapter.onRepoClickListener = object : ViewPagerBaseFragmentAdapter.OnRepoClickListener {
             override fun onOpenLinkClick(repo: Repo) {
                 openRepoLinkInBrowser(repo)
             }
@@ -84,14 +84,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun openRepoLinkInBrowser(repo: Repo) {
-//        val path = Environment.getExternalStoragePublicDirectory("${Environment.DIRECTORY_DOWNLOADS}/${repo.repoName}.zip")
-//        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(path.extension).toString()
-//        val url = FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", path)
-
         val url = Uri.parse(repo.urlRepository)
         val openLinkIntent = Intent(Intent.ACTION_VIEW, url)
-//        openLinkIntent.setDataAndType(url, mimeType)
-//        openLinkIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         val chooser = Intent.createChooser(openLinkIntent, "Choose app for open link").apply {
             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         }
@@ -112,12 +106,12 @@ class SearchFragment : Fragment() {
         viewModel.loadRepos(request)
     }
 
-    private fun renderData(appState: SearchFragmentAppState) {
+    private fun renderData(appState: AppState) {
         when (appState) {
-            is SearchFragmentAppState.Success -> {
+            is AppState.Success -> {
                 adapter.setReposData(appState.reposList)
             }
-            is SearchFragmentAppState.Error -> {
+            is AppState.Error -> {
                 //TODO add errorState
                 Toast.makeText(
                     requireContext(),
@@ -125,7 +119,7 @@ class SearchFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            is SearchFragmentAppState.Loading -> {
+            is AppState.Loading -> {
                 //TODO add progress
                 Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
             }

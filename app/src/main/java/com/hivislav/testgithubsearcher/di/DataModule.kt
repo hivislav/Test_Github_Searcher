@@ -3,6 +3,8 @@ package com.hivislav.testgithubsearcher.di
 import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
+import com.hivislav.testgithubsearcher.data.database.AppDatabase
+import com.hivislav.testgithubsearcher.data.database.RepoDao
 import com.hivislav.testgithubsearcher.data.network.ApiFactory
 import com.hivislav.testgithubsearcher.data.network.ApiService
 import com.hivislav.testgithubsearcher.data.repository.GithubRepositoryImpl
@@ -29,6 +31,12 @@ interface DataModule {
         @Provides
         fun provideDownloadManager(application: Application): DownloadManager {
             return application.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        }
+
+        @Provides
+        @ApplicationScope
+        fun provideRepoDao(application: Application): RepoDao {
+            return AppDatabase.getInstance(application).repoDao()
         }
     }
 }

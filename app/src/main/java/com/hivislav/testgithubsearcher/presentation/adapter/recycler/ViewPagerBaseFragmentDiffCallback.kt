@@ -3,7 +3,7 @@ package com.hivislav.testgithubsearcher.presentation.adapter.recycler
 import androidx.recyclerview.widget.DiffUtil
 import com.hivislav.testgithubsearcher.domain.Repo
 
-class SearchFragmentDiffCallback(
+class ViewPagerBaseFragmentDiffCallback(
     private var oldItems: List<Pair<Repo, Boolean>>,
     private var newItems: List<Pair<Repo, Boolean>>
 ) : DiffUtil.Callback() {

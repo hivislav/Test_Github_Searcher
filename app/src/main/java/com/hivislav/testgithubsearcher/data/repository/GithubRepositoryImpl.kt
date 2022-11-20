@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.DownloadManager
 import android.net.Uri
 import android.os.Environment
+import com.hivislav.testgithubsearcher.data.database.RepoDao
 import com.hivislav.testgithubsearcher.data.mapper.RepoMapper
 import com.hivislav.testgithubsearcher.data.network.ApiService
 import com.hivislav.testgithubsearcher.domain.GithubRepository
@@ -14,6 +15,7 @@ class GithubRepositoryImpl @Inject constructor(
     private val downloadManager: DownloadManager,
     private val application: Application,
     private val apiService: ApiService,
+    private val repoDao: RepoDao,
     private val mapper: RepoMapper
 ) : GithubRepository {
 
@@ -23,16 +25,14 @@ class GithubRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getUrlRepo(repo: Repo): String {
-        return repo.urlRepository
+    override suspend fun getDownloadRepos(): List<Pair<Repo, Boolean>> {
+        return repoDao.getReposList().map {
+            mapper.mapDbModelToPairEntity(it)
+        }
     }
 
-    override fun downloadRepo(repo: Repo) {
+    override suspend fun downloadRepo(repo: Repo) {
         val url = mapper.mapUrlRepo(repo.archiveUrl)
-
-        val path = Environment.getExternalStoragePublicDirectory(
-            "${Environment.DIRECTORY_DOWNLOADS}/${repo.repoName}$ZIP_FORMAT"
-        )
 
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle(repo.repoName)
@@ -43,6 +43,12 @@ class GithubRepositoryImpl @Inject constructor(
                 Environment.DIRECTORY_DOWNLOADS, "${repo.repoName}$ZIP_FORMAT"
             )
         downloadManager.enqueue(request)
+
+        val uriPathExternalDir = "${Environment.DIRECTORY_DOWNLOADS}/${repo.repoName}$ZIP_FORMAT"
+
+        repoDao.addRepo(
+            mapper.mapEntityToDbModel(repo, uriPathExternalDir)
+        )
     }
 
     companion object {

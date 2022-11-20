@@ -41,6 +41,6 @@
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_search_fragment_recycler"/>
+        tools:listitem="@layout/item_remote_fragment_recycler"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

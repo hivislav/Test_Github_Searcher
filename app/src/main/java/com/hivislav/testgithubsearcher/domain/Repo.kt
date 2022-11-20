@@ -6,5 +6,11 @@ data class Repo(
     val userName: String,
     val urlUserAvatar: String,
     val urlRepository: String,
-    val archiveUrl: String
-)
+    val archiveUrl: String,
+    val itemViewType: Int
+) {
+    companion object {
+        const val REMOTE_VIEW_TYPE = 11
+        const val LOCAL_VIEW_TYPE = 22
+    }
+}

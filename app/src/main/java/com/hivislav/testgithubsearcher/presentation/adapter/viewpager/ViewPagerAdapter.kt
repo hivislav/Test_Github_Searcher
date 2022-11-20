@@ -2,6 +2,7 @@ package com.hivislav.testgithubsearcher.presentation.adapter.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.hivislav.testgithubsearcher.presentation.ui.DownloadFragment
 import com.hivislav.testgithubsearcher.presentation.ui.SearchFragment
 import com.hivislav.testgithubsearcher.presentation.ui.ViewPagerBaseFragment
 
@@ -9,7 +10,8 @@ class ViewPagerAdapter(fragmentActivity: ViewPagerBaseFragment) :
     FragmentStateAdapter(fragmentActivity) {
 
     private val fragments = arrayOf(
-        SearchFragment.newInstance()
+        SearchFragment.newInstance(),
+        DownloadFragment.newInstance()
     )
 
     override fun getItemCount(): Int {
