@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
@@ -51,13 +50,8 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.recyclerSearchFragment.adapter = adapter
-        adapter.onRepoClickListener = object : SearchFragmentAdapter.OnRepoClickListener {
-            override fun onRepoClick(repo: Repo) {
-                openRepoLinkInBrowser(repo)
-            }
-        }
+        setupClickListeners()
 
         viewModel = ViewModelProvider(
             this,
@@ -67,16 +61,40 @@ class SearchFragment : Fragment() {
         viewModel.loadedRepos.observe(viewLifecycleOwner) {
             renderData(it)
         }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setupClickListeners() {
         binding.textInputLayoutSearchFragment.setEndIconOnClickListener {
             findRepos()
+        }
+
+        adapter.onRepoClickListener = object : SearchFragmentAdapter.OnRepoClickListener {
+            override fun onOpenLinkClick(repo: Repo) {
+                openRepoLinkInBrowser(repo)
+            }
+            override fun onDownloadClick(repo: Repo) {
+                viewModel.downloadRepo(repo)
+            }
         }
     }
 
     private fun openRepoLinkInBrowser(repo: Repo) {
+//        val path = Environment.getExternalStoragePublicDirectory("${Environment.DIRECTORY_DOWNLOADS}/${repo.repoName}.zip")
+//        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(path.extension).toString()
+//        val url = FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", path)
+
         val url = Uri.parse(repo.urlRepository)
         val openLinkIntent = Intent(Intent.ACTION_VIEW, url)
-        val chooser = Intent.createChooser(openLinkIntent, "Choose app for open link")
+//        openLinkIntent.setDataAndType(url, mimeType)
+//        openLinkIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        val chooser = Intent.createChooser(openLinkIntent, "Choose app for open link").apply {
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        }
 
         if (openLinkIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(chooser)
@@ -89,11 +107,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun findRepos() {
         val request = binding.editTextSearchFragment.text.toString()
         viewModel.loadRepos(request)
@@ -102,7 +115,7 @@ class SearchFragment : Fragment() {
     private fun renderData(appState: SearchFragmentAppState) {
         when (appState) {
             is SearchFragmentAppState.Success -> {
-                adapter.submitList(appState.reposList)
+                adapter.setReposData(appState.reposList)
             }
             is SearchFragmentAppState.Error -> {
                 //TODO add errorState
@@ -118,7 +131,6 @@ class SearchFragment : Fragment() {
             }
         }
     }
-
 
     companion object {
         fun newInstance() = SearchFragment()

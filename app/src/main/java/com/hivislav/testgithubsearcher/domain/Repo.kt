@@ -5,5 +5,6 @@ data class Repo(
     val repoName: String,
     val userName: String,
     val urlUserAvatar: String,
-    val urlRepository: String
+    val urlRepository: String,
+    val archiveUrl: String
 )

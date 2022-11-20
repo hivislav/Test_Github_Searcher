@@ -37,4 +37,8 @@ class SearchFragmentViewModel @Inject constructor(
             }
         }
     }
+
+    fun downloadRepo(repo: Repo) {
+        downloadRepoUseCase(repo)
+    }
 }

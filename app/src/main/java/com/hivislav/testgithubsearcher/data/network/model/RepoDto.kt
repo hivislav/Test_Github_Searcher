@@ -8,5 +8,7 @@ data class RepoDto(
     val repoName: String,
     val owner: OwnerDto,
     @SerializedName("html_url")
-    val htmlUrl: String
+    val htmlUrl: String,
+    @SerializedName("archive_url")
+    val archiveUrl: String
 )
