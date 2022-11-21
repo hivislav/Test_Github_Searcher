@@ -14,6 +14,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hivislav.testgithubsearcher.BuildConfig
+import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.databinding.FragmentDownloadBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
@@ -110,6 +111,7 @@ class DownloadFragment : Fragment() {
             override fun onOpenLinkClick(repo: Repo) {
                 openRepoLinkInBrowser(repo)
             }
+
             override fun onDownloadClick(repo: Repo) {
                 openZipFromLocalStorage(repo)
             }
@@ -119,25 +121,28 @@ class DownloadFragment : Fragment() {
     private fun openRepoLinkInBrowser(repo: Repo) {
         val url = Uri.parse(repo.urlRepository)
         val openLinkIntent = Intent(Intent.ACTION_VIEW, url)
-        val chooser = Intent.createChooser(openLinkIntent, "Choose app for open link").apply {
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        }
+        val chooser =
+            Intent.createChooser(openLinkIntent, getString(R.string.choose_app_for_open_link))
+                .apply {
+                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                }
 
         if (openLinkIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(chooser)
         } else {
-            Toast.makeText(
-                requireActivity(),
-                "Application not found to open link",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToastAppNotFound()
         }
     }
 
     private fun openZipFromLocalStorage(repo: Repo) {
         val path = Environment.getExternalStoragePublicDirectory(repo.archiveUrl)
-        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(path.extension).toString()
-        val uri = FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", path)
+        val mimeType =
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(path.extension).toString()
+        val uri = FileProvider.getUriForFile(
+            requireContext(),
+            "${BuildConfig.APPLICATION_ID}.provider",
+            path
+        )
 
         val openLinkIntent = Intent(Intent.ACTION_VIEW, uri)
         openLinkIntent.setDataAndType(uri, mimeType)
@@ -146,12 +151,16 @@ class DownloadFragment : Fragment() {
         if (openLinkIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(openLinkIntent)
         } else {
-            Toast.makeText(
-                requireActivity(),
-                "Application not found to open link",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToastAppNotFound()
         }
+    }
+
+    private fun showToastAppNotFound() {
+        Toast.makeText(
+            requireActivity(),
+            getString(R.string.application_not_found),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     companion object {

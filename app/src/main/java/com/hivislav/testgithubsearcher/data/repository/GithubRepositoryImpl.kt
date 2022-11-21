@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.DownloadManager
 import android.net.Uri
 import android.os.Environment
+import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.data.database.RepoDao
 import com.hivislav.testgithubsearcher.data.mapper.RepoMapper
 import com.hivislav.testgithubsearcher.data.network.ApiService
@@ -36,7 +37,7 @@ class GithubRepositoryImpl @Inject constructor(
 
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle(repo.repoName)
-            .setDescription("Downloading")
+            .setDescription(application.getString(R.string.downloading_text))
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setAllowedOverMetered(true)
             .setDestinationInExternalPublicDir(

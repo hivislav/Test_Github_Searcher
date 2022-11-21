@@ -48,6 +48,11 @@ class RepoMapper @Inject constructor() {
 
 
     fun mapUrlRepo(repoUrl: String): String {
-        return repoUrl.replace("{archive_format}{/ref}", "zipball", true)
+        return repoUrl.replace(ARCHIVE_FORMAT_END_POINT, ZIP_FORMAT_FOR_REQUEST, true)
+    }
+
+    companion object {
+        private const val ARCHIVE_FORMAT_END_POINT = "{archive_format}{/ref}"
+        private const val ZIP_FORMAT_FOR_REQUEST = "zipball"
     }
 }

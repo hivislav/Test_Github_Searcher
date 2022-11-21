@@ -63,13 +63,8 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/buttonOpenLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Open link"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:text="@string/open_link_text"
+            style="@style/textViewButtonItemRepoStyle"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/buttonOpenZip"
@@ -79,13 +74,8 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/buttonOpenZip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Open zip from local storage"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:text="@string/open_zip_from_local_storage_text"
+            style="@style/textViewButtonItemRepoStyle"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

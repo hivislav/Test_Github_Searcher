@@ -2,4 +2,11 @@
 <resources>
     <string name="enter_username_hint">Enter username</string>
     <string name="nothing_found_error_text_view">Nothing found</string>
+    <string name="open_link_text">Open link</string>
+    <string name="open_zip_from_local_storage_text">Open zip from local storage</string>
+    <string name="download_zip_text">Download zip</string>
+    <string name="downloading_text">Downloading</string>
+    <string name="choose_app_for_open_link">Choose app for open link</string>
+    <string name="application_not_found">Application not found to open link</string>
+    <string name="try_again">Try again</string>
 </resources>

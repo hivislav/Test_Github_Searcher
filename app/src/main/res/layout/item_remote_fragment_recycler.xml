@@ -63,35 +63,25 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/buttonOpenLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
             android:visibility="gone"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            style="@style/textViewButtonItemRepoStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/repoNameTextView"
             app:layout_constraintEnd_toStartOf="@id/buttonDownloadZip"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible"
-            android:text="Open link"/>
+            android:text="@string/open_link_text"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/buttonDownloadZip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
             android:visibility="gone"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            style="@style/textViewButtonItemRepoStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/buttonOpenLink"
             app:layout_constraintTop_toBottomOf="@id/repoNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             tools:visibility="visible"
-            android:text="Download zip"/>
+            android:text="@string/download_zip_text"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

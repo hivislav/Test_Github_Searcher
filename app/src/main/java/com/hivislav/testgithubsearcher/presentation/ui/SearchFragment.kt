@@ -106,16 +106,18 @@ class SearchFragment : Fragment() {
     private fun openRepoLinkInBrowser(repo: Repo) {
         val url = Uri.parse(repo.urlRepository)
         val openLinkIntent = Intent(Intent.ACTION_VIEW, url)
-        val chooser = Intent.createChooser(openLinkIntent, "Choose app for open link").apply {
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        }
+        val chooser =
+            Intent.createChooser(openLinkIntent, getString(R.string.choose_app_for_open_link))
+                .apply {
+                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                }
 
         if (openLinkIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(chooser)
         } else {
             Toast.makeText(
                 requireActivity(),
-                "Application not found to open link",
+                getString(R.string.application_not_found),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -159,7 +161,7 @@ class SearchFragment : Fragment() {
             "Error: ${appStateSearchFragment.errorMessage}",
             Snackbar.LENGTH_INDEFINITE
         )
-            .setAction("Try again") {
+            .setAction(getString(R.string.try_again)) {
                 viewModel.loadRepos(binding.editTextSearchFragment.text.toString())
             }
             .show()
