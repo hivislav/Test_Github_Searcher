@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.databinding.FragmentViewPagerBaseBinding
 import com.hivislav.testgithubsearcher.presentation.adapter.viewpager.ViewPagerAdapter
 
@@ -40,14 +41,20 @@ class ViewPagerBaseFragment : Fragment() {
             binding.tabLayout, binding.viewPager
         ) { tab, position ->
             tab.text = when (position) {
-                0 -> {
-                    "Поиск"
+                SEARCH_TAB -> {
+                    getString(R.string.search)
                 }
-                1 -> {
-                    "Загрузки"
+                DOWNLOADS_TAB -> {
+                    getString(R.string.downloads)
                 }
-                else -> ""
+                else -> EMPTY_STRING
             }
         }.attach()
+    }
+
+    companion object {
+        private const val EMPTY_STRING = ""
+        private const val SEARCH_TAB = 0
+        private const val DOWNLOADS_TAB = 1
     }
 }

@@ -9,4 +9,5 @@
     <string name="choose_app_for_open_link">Choose app for open link</string>
     <string name="application_not_found">Application not found to open link</string>
     <string name="try_again">Try again</string>
+    <string name="search">Search</string>
 </resources>
