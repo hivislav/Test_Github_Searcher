@@ -18,7 +18,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutSearchFragment"
             app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_baseline_close_24"
+            app:endIconDrawable="@drawable/ic_close"
             app:endIconTint="@color/grey"
             app:boxCornerRadiusTopStart="10dp"
             app:boxCornerRadiusBottomEnd="10dp"

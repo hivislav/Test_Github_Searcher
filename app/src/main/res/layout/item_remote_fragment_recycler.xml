@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     app:cardCornerRadius="10dp"
     app:cardElevation="2dp"
+    app:strokeColor="@color/green_secondaryVariant"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:layout_marginStart="8dp"
@@ -18,16 +19,25 @@
         android:layout_height="match_parent"
         android:layout_margin="4dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/avatarImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/user_avatar"
+            android:padding="1dp"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="@string/user_avatar" />
+            tools:src="@drawable/ic_launcher_foreground" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/user_avatar"
+            android:src="@drawable/shape_user_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/userNameTextView"

@@ -3,9 +3,13 @@ package com.hivislav.testgithubsearcher.presentation.adapter.recycler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.hivislav.testgithubsearcher.databinding.ItemLocalFragmentRecyclerBinding
 import com.hivislav.testgithubsearcher.databinding.ItemRemoteFragmentRecyclerBinding
 import com.hivislav.testgithubsearcher.domain.Repo
@@ -71,7 +75,9 @@ class ViewPagerBaseFragmentAdapter(
 
             itemView.apply {
                 with(binding) {
-                    avatarImage.load(repo.first.urlUserAvatar)
+                    avatarImage.load(repo.first.urlUserAvatar) {
+                        transformations(RoundedCornersTransformation(25f))
+                    }
                     userNameTextView.text = repo.first.userName
                     repoNameTextView.text = repo.first.repoName
                     buttonOpenLink.visibility = if (repo.second) View.VISIBLE else View.GONE
@@ -99,7 +105,9 @@ class ViewPagerBaseFragmentAdapter(
 
             itemView.apply {
                 with(binding) {
-                    avatarImage.load(repo.first.urlUserAvatar)
+                    avatarImage.load(repo.first.urlUserAvatar) {
+                        transformations(RoundedCornersTransformation(25f))
+                    }
                     userNameTextView.text = repo.first.userName
                     repoNameTextView.text = repo.first.repoName
                     buttonOpenLink.visibility = if (repo.second) View.VISIBLE else View.GONE

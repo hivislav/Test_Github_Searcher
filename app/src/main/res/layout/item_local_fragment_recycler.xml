@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="2dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
-    android:layout_height="wrap_content">
+    android:layout_marginBottom="4dp"
+    app:strokeColor="@color/green_secondaryVariant"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="4dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/avatarImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/user_avatar"
+            android:padding="1dp"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="@string/user_avatar" />
+            tools:src="@drawable/ic_launcher_foreground" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/user_avatar"
+            android:src="@drawable/shape_user_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/userNameTextView"
@@ -36,9 +46,9 @@
             android:layout_marginStart="16dp"
             android:textSize="14sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/repoNameTextView"
             app:layout_constraintStart_toEndOf="@id/avatarImage"
             app:layout_constraintTop_toTopOf="@id/avatarImage"
-            app:layout_constraintBottom_toTopOf="@id/repoNameTextView"
             tools:text="@string/app_name" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -57,15 +67,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:visibility="gone"
+            android:text="Open link"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/repoNameTextView"
             app:layout_constraintEnd_toStartOf="@id/buttonOpenZip"
             app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible"
-            android:text="Open link"/>
+            app:layout_constraintTop_toBottomOf="@id/repoNameTextView"
+            tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/buttonOpenZip"
@@ -73,15 +83,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:visibility="gone"
+            android:text="Open zip from local storage"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buttonOpenLink"
             app:layout_constraintTop_toBottomOf="@id/repoNameTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="visible"
-            android:text="Open zip from local storage"/>
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
