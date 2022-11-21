@@ -92,14 +92,17 @@ class DownloadFragment : Fragment() {
                 adapter.setReposData(appStateDownloadFragment.reposList)
             }
             is AppStateDownloadFragment.Error -> {
-                //TODO add errorState
-                Toast.makeText(
-                    requireContext(),
-                    "Error: ${appStateDownloadFragment.errorMessage}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToastError(appStateDownloadFragment)
             }
         }
+    }
+
+    private fun showToastError(appStateDownloadFragment: AppStateDownloadFragment.Error) {
+        Toast.makeText(
+            requireContext(),
+            "Error: ${appStateDownloadFragment.errorMessage}",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun setupClickListeners() {

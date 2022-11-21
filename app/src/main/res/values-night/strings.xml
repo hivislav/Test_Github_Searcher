@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="enter_username_hint">Enter username</string>
+    <string name="nothing_found_error_text_view">Nothing found</string>
 </resources>

@@ -62,4 +62,27 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_remote_fragment_recycler"/>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/errorImageSearchFragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sad_cat"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/errorTextViewSearchFragment"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="@string/nothing_found_error_text_view"
+        app:layout_constraintTop_toBottomOf="@id/errorImageSearchFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

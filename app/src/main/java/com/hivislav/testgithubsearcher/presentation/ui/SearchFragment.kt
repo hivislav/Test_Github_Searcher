@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.ImageLoader
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
 import com.hivislav.testgithubsearcher.domain.Repo
@@ -95,6 +96,7 @@ class SearchFragment : Fragment() {
             override fun onOpenLinkClick(repo: Repo) {
                 openRepoLinkInBrowser(repo)
             }
+
             override fun onDownloadClick(repo: Repo) {
                 viewModel.downloadRepo(repo)
             }
@@ -127,28 +129,63 @@ class SearchFragment : Fragment() {
     private fun renderData(appStateSearchFragment: AppStateSearchFragment) {
         when (appStateSearchFragment) {
             is AppStateSearchFragment.Success -> {
-                binding.progressSearchFragment.visibility = View.GONE
-                binding.textInputLayoutSearchFragment.isEndIconVisible = true
+                hideProgress()
+                hideNothingFoundError()
                 adapter.setReposData(appStateSearchFragment.reposList)
             }
             is AppStateSearchFragment.Error -> {
-                //TODO add errorState
-                Toast.makeText(
-                    requireContext(),
-                    "Error: ${appStateSearchFragment.errorMessage}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                hideProgress()
+
+                if (appStateSearchFragment.errorMessage.contains(ERROR_HTTP_404)) {
+                    showNothingFoundError()
+                } else {
+                    showErrorSnackBar(appStateSearchFragment)
+                }
             }
             is AppStateSearchFragment.Loading -> {
-                binding.textInputLayoutSearchFragment.isEndIconVisible = false
-                binding.progressSearchFragment.visibility = View.VISIBLE
-                binding.progressSearchFragment.load(R.drawable.running_cat, imageLoader)
+                showProgress()
             }
         }
+    }
+
+    private fun showErrorSnackBar(appStateSearchFragment: AppStateSearchFragment.Error) {
+        Snackbar.make(
+            binding.root,
+            "Error: ${appStateSearchFragment.errorMessage}",
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction("Try again") {
+                viewModel.loadRepos(binding.editTextSearchFragment.text.toString())
+            }
+            .show()
+    }
+
+    private fun showNothingFoundError() {
+        binding.errorImageSearchFragment.visibility = View.VISIBLE
+        binding.errorTextViewSearchFragment.visibility = View.VISIBLE
+        binding.recyclerSearchFragment.visibility = View.GONE
+    }
+
+    private fun hideNothingFoundError() {
+        binding.errorImageSearchFragment.visibility = View.GONE
+        binding.errorTextViewSearchFragment.visibility = View.GONE
+        binding.recyclerSearchFragment.visibility = View.VISIBLE
+    }
+
+    private fun showProgress() {
+        binding.textInputLayoutSearchFragment.isEndIconVisible = false
+        binding.progressSearchFragment.visibility = View.VISIBLE
+        binding.progressSearchFragment.load(R.drawable.running_cat, imageLoader)
+    }
+
+    private fun hideProgress() {
+        binding.textInputLayoutSearchFragment.isEndIconVisible = true
+        binding.progressSearchFragment.visibility = View.GONE
     }
 
     companion object {
         fun newInstance() = SearchFragment()
         private const val EMPTY_STRING = ""
+        private const val ERROR_HTTP_404 = "HTTP 404"
     }
 }
