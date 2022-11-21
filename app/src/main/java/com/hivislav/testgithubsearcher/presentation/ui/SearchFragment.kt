@@ -130,8 +130,13 @@ class SearchFragment : Fragment() {
         when (appStateSearchFragment) {
             is AppStateSearchFragment.Success -> {
                 hideProgress()
-                hideNothingFoundError()
-                adapter.setReposData(appStateSearchFragment.reposList)
+
+                if (appStateSearchFragment.reposList.isEmpty()) {
+                    showNothingFoundError()
+                } else {
+                    hideNothingFoundError()
+                    adapter.setReposData(appStateSearchFragment.reposList)
+                }
             }
             is AppStateSearchFragment.Error -> {
                 hideProgress()
