@@ -3,6 +3,10 @@ package com.hivislav.testgithubsearcher.di
 import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
+import android.os.Build
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.hivislav.testgithubsearcher.data.database.AppDatabase
 import com.hivislav.testgithubsearcher.data.database.RepoDao
 import com.hivislav.testgithubsearcher.data.network.ApiFactory
@@ -37,6 +41,20 @@ interface DataModule {
         @ApplicationScope
         fun provideRepoDao(application: Application): RepoDao {
             return AppDatabase.getInstance(application).repoDao()
+        }
+
+        @Provides
+        @ApplicationScope
+        fun buildImageLoader(application: Application): ImageLoader {
+            return ImageLoader.Builder(application)
+                .components {
+                    if (Build.VERSION.SDK_INT >= 28) {
+                        add(ImageDecoderDecoder.Factory())
+                    } else {
+                        add(GifDecoder.Factory())
+                    }
+                }
+                .build()
         }
     }
 }

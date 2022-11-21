@@ -18,7 +18,8 @@ import com.hivislav.testgithubsearcher.databinding.FragmentDownloadBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
 import com.hivislav.testgithubsearcher.presentation.adapter.recycler.ViewPagerBaseFragmentAdapter
-import com.hivislav.testgithubsearcher.presentation.viewmodel.AppState
+import com.hivislav.testgithubsearcher.presentation.viewmodel.AppStateDownloadFragment
+import com.hivislav.testgithubsearcher.presentation.viewmodel.AppStateSearchFragment
 import com.hivislav.testgithubsearcher.presentation.viewmodel.DownloadFragmentViewModel
 import com.hivislav.testgithubsearcher.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -85,22 +86,18 @@ class DownloadFragment : Fragment() {
         _binding = null
     }
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                adapter.setReposData(appState.reposList)
+    private fun renderData(appStateDownloadFragment: AppStateDownloadFragment) {
+        when (appStateDownloadFragment) {
+            is AppStateDownloadFragment.Success -> {
+                adapter.setReposData(appStateDownloadFragment.reposList)
             }
-            is AppState.Error -> {
+            is AppStateDownloadFragment.Error -> {
                 //TODO add errorState
                 Toast.makeText(
                     requireContext(),
-                    "Error: ${appState.errorMessage}",
+                    "Error: ${appStateDownloadFragment.errorMessage}",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            is AppState.Loading -> {
-                //TODO add progress
-                Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
             }
         }
     }

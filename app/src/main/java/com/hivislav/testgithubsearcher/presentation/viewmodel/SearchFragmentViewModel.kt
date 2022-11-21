@@ -15,23 +15,23 @@ class SearchFragmentViewModel @Inject constructor(
     private val downloadRepoUseCase: DownloadRepoUseCase
 ) : ViewModel() {
 
-    private val _loadedRepos = MutableLiveData<AppState>()
-    val loadedRepos: LiveData<AppState>
+    private val _loadedRepos = MutableLiveData<AppStateSearchFragment>()
+    val loadedRepos: LiveData<AppStateSearchFragment>
         get() = _loadedRepos
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _loadedRepos.postValue(AppState.Error(throwable.message.toString()))
+        _loadedRepos.postValue(AppStateSearchFragment.Error(throwable.message.toString()))
     }
 
     fun loadRepos(userName: String) {
-        _loadedRepos.postValue(AppState.Loading)
+        _loadedRepos.postValue(AppStateSearchFragment.Loading)
         viewModelScope.launch(Dispatchers.Main + coroutineExceptionHandler) {
             val deferredRepoList = async(Dispatchers.IO) {
                 loadReposUseCase(userName)
             }
             val listRepos = deferredRepoList.await()
             if (isActive) {
-                _loadedRepos.postValue(AppState.Success(listRepos))
+                _loadedRepos.postValue(AppStateSearchFragment.Success(listRepos))
             }
         }
     }

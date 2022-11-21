@@ -11,12 +11,15 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.ImageLoader
+import coil.load
+import com.hivislav.testgithubsearcher.R
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.hideKeyboard
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
 import com.hivislav.testgithubsearcher.presentation.adapter.recycler.ViewPagerBaseFragmentAdapter
-import com.hivislav.testgithubsearcher.presentation.viewmodel.AppState
+import com.hivislav.testgithubsearcher.presentation.viewmodel.AppStateSearchFragment
 import com.hivislav.testgithubsearcher.presentation.viewmodel.SearchFragmentViewModel
 import com.hivislav.testgithubsearcher.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -31,6 +34,9 @@ class SearchFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: SearchFragmentViewModel
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     private val component by lazy {
         (requireActivity().application as GithubApplication).component
@@ -118,22 +124,25 @@ class SearchFragment : Fragment() {
         viewModel.loadRepos(request)
     }
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                adapter.setReposData(appState.reposList)
+    private fun renderData(appStateSearchFragment: AppStateSearchFragment) {
+        when (appStateSearchFragment) {
+            is AppStateSearchFragment.Success -> {
+                binding.progressSearchFragment.visibility = View.GONE
+                binding.textInputLayoutSearchFragment.isEndIconVisible = true
+                adapter.setReposData(appStateSearchFragment.reposList)
             }
-            is AppState.Error -> {
+            is AppStateSearchFragment.Error -> {
                 //TODO add errorState
                 Toast.makeText(
                     requireContext(),
-                    "Error: ${appState.errorMessage}",
+                    "Error: ${appStateSearchFragment.errorMessage}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            is AppState.Loading -> {
-                //TODO add progress
-                Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+            is AppStateSearchFragment.Loading -> {
+                binding.textInputLayoutSearchFragment.isEndIconVisible = false
+                binding.progressSearchFragment.visibility = View.VISIBLE
+                binding.progressSearchFragment.load(R.drawable.running_cat, imageLoader)
             }
         }
     }

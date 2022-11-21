@@ -12,23 +12,22 @@ class DownloadFragmentViewModel @Inject constructor(
     private val getDownloadReposUseCase: GetDownloadReposUseCase
 ) : ViewModel() {
 
-    private val _downloadedRepos = MutableLiveData<AppState>()
-    val downloadedRepos: LiveData<AppState>
+    private val _downloadedRepos = MutableLiveData<AppStateDownloadFragment>()
+    val downloadedRepos: LiveData<AppStateDownloadFragment>
         get() = _downloadedRepos
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _downloadedRepos.postValue(AppState.Error(throwable.message.toString()))
+        _downloadedRepos.postValue(AppStateDownloadFragment.Error(throwable.message.toString()))
     }
 
     fun getDownloadRepos() {
-        _downloadedRepos.postValue(AppState.Loading)
         viewModelScope.launch ( Dispatchers.Main + coroutineExceptionHandler ) {
             val deferredRepoList = async(Dispatchers.IO) {
                 getDownloadReposUseCase()
             }
             val repoList = deferredRepoList.await()
             if (isActive) {
-                _downloadedRepos.postValue(AppState.Success(repoList))
+                _downloadedRepos.postValue(AppStateDownloadFragment.Success(repoList))
             }
         }
     }

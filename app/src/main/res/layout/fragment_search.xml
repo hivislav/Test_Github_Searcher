@@ -44,6 +44,15 @@
         </com.google.android.material.textfield.TextInputLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/progressSearchFragment"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@id/appbarSearchFragment"
+        app:layout_constraintEnd_toEndOf="@id/appbarSearchFragment"
+        tools:src="@mipmap/ic_launcher"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerSearchFragment"
         app:layout_constraintTop_toBottomOf="@id/appbarSearchFragment"
