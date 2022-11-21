@@ -18,8 +18,8 @@ import com.hivislav.testgithubsearcher.databinding.FragmentDownloadBinding
 import com.hivislav.testgithubsearcher.domain.Repo
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
 import com.hivislav.testgithubsearcher.presentation.adapter.recycler.ViewPagerBaseFragmentAdapter
-import com.hivislav.testgithubsearcher.presentation.viewmodel.DownloadFragmentViewModel
 import com.hivislav.testgithubsearcher.presentation.viewmodel.AppState
+import com.hivislav.testgithubsearcher.presentation.viewmodel.DownloadFragmentViewModel
 import com.hivislav.testgithubsearcher.presentation.viewmodel.ViewModelFactory
 import javax.inject.Inject
 

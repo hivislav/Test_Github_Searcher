@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hivislav.testgithubsearcher.databinding.FragmentSearchBinding
 import com.hivislav.testgithubsearcher.domain.Repo
+import com.hivislav.testgithubsearcher.hideKeyboard
 import com.hivislav.testgithubsearcher.presentation.GithubApplication
 import com.hivislav.testgithubsearcher.presentation.adapter.recycler.ViewPagerBaseFragmentAdapter
 import com.hivislav.testgithubsearcher.presentation.viewmodel.AppState
@@ -70,7 +72,17 @@ class SearchFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.textInputLayoutSearchFragment.setEndIconOnClickListener {
-            findRepos()
+            binding.editTextSearchFragment.setText(EMPTY_STRING)
+        }
+
+        binding.editTextSearchFragment.setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                findRepos()
+                textView.hideKeyboard()
+                true
+            } else {
+                false
+            }
         }
 
         adapter.onRepoClickListener = object : ViewPagerBaseFragmentAdapter.OnRepoClickListener {
@@ -128,5 +140,6 @@ class SearchFragment : Fragment() {
 
     companion object {
         fun newInstance() = SearchFragment()
+        private const val EMPTY_STRING = ""
     }
 }

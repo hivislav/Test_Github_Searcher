@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.hivislav.testgithubsearcher.databinding.ViewPagerBaseFragmentBinding
+import com.hivislav.testgithubsearcher.databinding.FragmentViewPagerBaseBinding
 import com.hivislav.testgithubsearcher.presentation.adapter.viewpager.ViewPagerAdapter
 
 class ViewPagerBaseFragment : Fragment() {
 
-    private var _binding: ViewPagerBaseFragmentBinding? = null
+    private var _binding: FragmentViewPagerBaseBinding? = null
     private val binding
         get() = _binding ?: throw RuntimeException("ViewPagerBaseFragmentBinding is null")
 
@@ -20,7 +20,7 @@ class ViewPagerBaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ViewPagerBaseFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentViewPagerBaseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
