@@ -28,7 +28,7 @@ https://user-images.githubusercontent.com/99187338/203114300-fe63b59f-896a-42da-
 
 ## Start application and finding repositories. Working with errors.
 
-https://user-images.githubusercontent.com/99187338/203114623-2924edc1-8563-4fba-b49f-9402a53ac4f2.mp4
+https://user-images.githubusercontent.com/99187338/203247129-2874be2f-86c9-4a4b-8596-44f41daa69c2.mp4
 
 https://user-images.githubusercontent.com/99187338/203115788-2fc9c709-0601-4422-9692-adbb33439d8f.mp4
 
